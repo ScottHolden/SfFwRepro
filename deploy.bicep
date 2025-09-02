@@ -235,8 +235,9 @@ resource networkContributorRole 'Microsoft.Authorization/roleDefinitions@2022-05
 }
 
 resource sfNetworkContribRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  scope: spokeVnet
-  name: guid(azureServiceFabricResourceProviderObjectId, spokeVnet.id, networkContributorRole.id)
+  // Todo: reduce scope and permission, needs to be on subnet and route table
+  scope: resourceGroup()
+  name: guid(azureServiceFabricResourceProviderObjectId, resourceGroup().id, networkContributorRole.id)
   properties: {
     roleDefinitionId: networkContributorRole.id
     principalId: azureServiceFabricResourceProviderObjectId
